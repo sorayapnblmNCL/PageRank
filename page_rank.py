@@ -63,22 +63,19 @@ def stochastic_page_rank(graph, args):
     for i in graph:
         dict_count[i] = 0
 
-    #Choose a target nodes in the random node's  edges
+    #Repeat the random walker process "args.repeats" times
     for k in range(args.repeats):
         # Choose a random source node in the graph and increase its hit count
-
-        # On choisit un node au hasard le tout premier et on augmente son hit
-        random_node_source = random.choice(list(graph))
-        dict_count[random_node_source] += 1 / (args.repeats)
-        # Dans les target de random node source on choisit un au hasard on le renomme random node sourc et
-        # on augmente son hit
-        random_node_source = random.choice(graph[random_node_source])
-        dict_count[random_node_source] += 1 / (args.repeats)
-        #Si le random node source est mui aussi un node alors on choisit au hasard un de ses target
-        if random_node_source in graph:
-            random_node_source = random.choice(graph[random_node_source])
-            dict_count[random_node_source] += 1 / (args.repeats)
-
+        current_node = random.choice(list(graph))
+        #Repeat the walker steps "args.steps" time
+        for j in range(args.steps):
+            # Select randomly a node from the target list of current_node and name it as the new current
+            current_node = random.choice(graph[current_node])
+            # Increase the hit value of the new current_node
+            dict_count[current_node] += 1 / (args.repeats)
+            # If the new current_node does not have has no outgoing edges then break the walker steps loop to select a new random node
+            if current_node not in graph:
+                break
     return dict_count
 
 
@@ -124,7 +121,12 @@ def distribution_page_rank(graph, args):
     This function estimates the Page Rank by iteratively calculating
     the probability that a random walker is currently on any node.
     """
-    raise RuntimeError("This function is not implemented yet.")
+    # Initialize the hit count frequency of every node to 0
+    dict_count = dict()
+    for i in graph:
+        dict_count[i] = 1/ (len(graph))
+
+
 
 
 parser = argparse.ArgumentParser(description="Estimates page ranks from link information")
