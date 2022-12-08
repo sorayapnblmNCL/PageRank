@@ -3,6 +3,7 @@ import os
 import time
 import argparse
 from progress import Progress
+import random
 
 
 def load_graph(args):
@@ -57,7 +58,38 @@ def stochastic_page_rank(graph, args):
     a random walk that starts on a random node will after n_steps end
     on each node of the given graph.
     """
-    raise RuntimeError("This function is not implemented yet.")
+    # Initialize the hit count frequency of every node to 0
+    dict_count = dict()
+    for i in graph:
+        dict_count[i] = 0
+
+    #Choose a random source node in the graph and increase its hit count
+    #random_node_source = random.choice(list(graph))
+    #dict_count[random_node_source] += 1/(args.repeats)
+
+    #Choose a target nodes in the random node's  edges
+    for k in range(args.repeats):
+        # Choose a random source node in the graph and increase its hit count
+        random_node_source = random.choice(list(graph))
+        dict_count[random_node_source] += 1 / (args.repeats)
+
+        if len(graph[random_node_source]) == 0 :
+            random_node_source = random.choice(list(graph))
+            dict_count[random_node_source] += 1/(args.repeats)
+        else:
+            random_node_source = random.choice(graph[random_node_source])
+            dict_count[random_node_source] += 1/(args.repeats)
+
+    return dict_count
+
+
+
+
+
+
+
+
+
 
 
 def distribution_page_rank(graph, args):
@@ -88,20 +120,29 @@ parser.add_argument('-n', '--number', type=int, default=20, help="number of resu
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    #algorithm = distribution_page_rank if args.method == 'distribution' else stochastic_page_rank
+    algorithm = distribution_page_rank if args.method == 'distribution' else stochastic_page_rank
 
     graph = load_graph(args)
-    print(graph)
+    #print(graph)
+
+    #result = '\n'.join(f'{key}: {value}' for key, value in graph.items())
+    #print(result)
+
     print(print_stats(graph))
+    #print(list(graph))
 
-    #print_stats(graph)
+    print(stochastic_page_rank(graph, args))
 
-    #start = time.time()
-    #ranking = algorithm(graph, args)
-    #stop = time.time()
-    #time = stop - start
 
-    #top = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
-    #sys.stderr.write(f"Top {args.number} pages:\n")
-    #print('\n'.join(f'{100*v:.2f}\t{k}' for k,v in top[:args.number]))
-    #sys.stderr.write(f"Calculation took {time:.2f} seconds.\n")
+
+    print_stats(graph)
+
+    start = time.time()
+    ranking = algorithm(graph, args)
+    stop = time.time()
+    time = stop - start
+
+    top = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
+    sys.stderr.write(f"Top {args.number} pages:\n")
+    print('\n'.join(f'{100*v:.2f}\t{k}' for k,v in top[:args.number]))
+    sys.stderr.write(f"Calculation took {time:.2f} seconds.\n")
