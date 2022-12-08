@@ -14,15 +14,24 @@ def load_graph(args):
     Returns:
     A dict mapling a URL (str) to a list of target URLs (str).
     """
+    # Create a graph
+    Graph = dict()
     # Iterate through the file line by line
     for line in args.datafile:
         # And split each line into two URLs
         node, target = line.split()
-        raise RuntimeError("This function is not implemented yet.")
+        if node not in Graph:
+            Graph[node] = []
+            Graph[node].append(target)
+        elif node in Graph:
+            Graph[node].append(target)
+    return Graph
+
 
 
 def print_stats(graph):
         """Print number of nodes and edges in the given graph"""
+
         raise RuntimeError("This function is not implemented yet.")
 
 
@@ -71,18 +80,19 @@ parser.add_argument('-n', '--number', type=int, default=20, help="number of resu
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    algorithm = distribution_page_rank if args.method == 'distribution' else stochastic_page_rank
+    #algorithm = distribution_page_rank if args.method == 'distribution' else stochastic_page_rank
 
     graph = load_graph(args)
+    print(graph)
 
-    print_stats(graph)
+    #print_stats(graph)
 
-    start = time.time()
-    ranking = algorithm(graph, args)
-    stop = time.time()
-    time = stop - start
+    #start = time.time()
+    #ranking = algorithm(graph, args)
+    #stop = time.time()
+    #time = stop - start
 
-    top = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
-    sys.stderr.write(f"Top {args.number} pages:\n")
-    print('\n'.join(f'{100*v:.2f}\t{k}' for k,v in top[:args.number]))
-    sys.stderr.write(f"Calculation took {time:.2f} seconds.\n")
+    #top = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
+    #sys.stderr.write(f"Top {args.number} pages:\n")
+    #print('\n'.join(f'{100*v:.2f}\t{k}' for k,v in top[:args.number]))
+    #sys.stderr.write(f"Calculation took {time:.2f} seconds.\n")
