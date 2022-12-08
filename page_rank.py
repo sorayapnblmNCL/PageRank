@@ -63,29 +63,48 @@ def stochastic_page_rank(graph, args):
     for i in graph:
         dict_count[i] = 0
 
-    #Choose a random source node in the graph and increase its hit count
-    #random_node_source = random.choice(list(graph))
-    #dict_count[random_node_source] += 1/(args.repeats)
-
     #Choose a target nodes in the random node's  edges
     for k in range(args.repeats):
         # Choose a random source node in the graph and increase its hit count
+
+        # On choisit un node au hasard le tout premier et on augmente son hit
         random_node_source = random.choice(list(graph))
         dict_count[random_node_source] += 1 / (args.repeats)
-
-        if len(graph[random_node_source]) == 0 :
-            random_node_source = random.choice(list(graph))
-            dict_count[random_node_source] += 1/(args.repeats)
-        else:
+        # Dans les target de random node source on choisit un au hasard on le renomme random node sourc et
+        # on augmente son hit
+        random_node_source = random.choice(graph[random_node_source])
+        dict_count[random_node_source] += 1 / (args.repeats)
+        #Si le random node source est mui aussi un node alors on choisit au hasard un de ses target
+        if random_node_source in graph:
             random_node_source = random.choice(graph[random_node_source])
-            dict_count[random_node_source] += 1/(args.repeats)
+            dict_count[random_node_source] += 1 / (args.repeats)
 
     return dict_count
 
 
+"""""
+if len(graph[random_node_source]) == 0:
+    random_node_source = random.choice(list(graph))
+    dict_count[random_node_source] += 1 / (args.repeats)
+    
+    else:
+        random_node_source = random.choice(graph[random_node_source])
+        dict_count[random_node_source] += 1/(args.repeats)
 
+=============
 
+#Choose a target nodes in the random node's  edges
+    for k in range(args.repeats):
+        # Choose a random source node in the graph and increase its hit count
+        random_node_source = random.choice(list(graph))
+        dict_count[random_node_source] += 1 / (args.repeats)
+        if len(graph[random_node_source]) != None: #0 or None here
+            random_node_source = random.choice(graph[random_node_source])
+            dict_count[random_node_source] += 1 / (args.repeats)
 
+    return dict_count
+    
+"""""
 
 
 
@@ -131,7 +150,7 @@ if __name__ == '__main__':
     print(print_stats(graph))
     #print(list(graph))
 
-    print(stochastic_page_rank(graph, args))
+    #print(stochastic_page_rank(graph, args))
 
 
 
