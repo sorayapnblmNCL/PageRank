@@ -121,10 +121,48 @@ def distribution_page_rank(graph, args):
     This function estimates the Page Rank by iteratively calculating
     the probability that a random walker is currently on any node.
     """
-    # Initialize the hit count frequency of every node to 0
-    dict_count = dict()
-    for i in graph:
-        dict_count[i] = 1/ (len(graph))
+    # Initialize each node probability to 1/(number of nodes)
+    node_prob = dict()
+    for node in graph:
+        node_prob[node] = 1/ (len(graph))
+
+    # Repeat iterations "args.steps" times
+    for i in range(args.steps):
+
+        #Initialize the next_prob of each node to 0
+        next_prob = dict()
+        for node in graph:
+            next_prob[node] = 0
+
+        for node in graph:
+            p = node_prob[node] /(len(graph[node]))
+            for target in graph[node]:
+                next_prob[target] += p
+
+        for node in next_prob:
+            node_prob[node] = next_prob[node]
+
+    return node_prob
+
+
+
+
+
+
+
+"""
+initialize node_prob[node] = 1/(number of nodes) for all nodes
+repeat n_steps times:
+    initialize next_prob[node] = 0 for all nodes
+    for each node:
+        p <- node_prob[node] divided by its out degree
+        for each target among out edges of node:
+            next_prob[target] += p
+    node_prob <- next_prob
+    
+"""
+
+
 
 
 
