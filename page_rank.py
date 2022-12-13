@@ -45,41 +45,6 @@ def print_stats(graph):
 
 
 def stochastic_page_rank(graph, args):
-    """Stochastic PageRank estimation
-
-    Parameters:
-    graph -- a graph object as returned by load_graph()
-    args -- arguments named tuple
-
-    Returns:
-    A dict that assigns each page its hit frequency
-
-    This function estimates the Page Rank by counting how frequently
-    a random walk that starts on a random node will after n_steps end
-    on each node of the given graph.
-    """
-    # Initialize the hit count frequency of every node to 0
-    dict_count = dict()
-    for i in graph:
-        dict_count[i] = 0
-
-    # Repeat the random walker process "args.repeats" times
-    for k in range(args.repeats):
-        # Choose a random source node in the graph and increase its hit count
-        current_node = random.choice(list(graph))
-        # Do a random walk of "args.steps" steps
-        for j in range(args.steps):
-            # Select randomly a node from the target list of current_node and name it as the new current
-            current_node = random.choice(graph[current_node])
-            # Increase the hit value of the new current_node
-            dict_count[current_node] += 1 / ((args.steps) * (args.repeats))
-            # If the new current_node does not have has no outgoing edges then break the walker steps loop to select a new random node
-            if current_node not in graph:
-                break
-    return dict_count
-
-
-def stochastic_page_rankf(graph, args):
     # Initialize the hit count frequency of every node to 0
     dict_count = dict()
     for i in graph:
