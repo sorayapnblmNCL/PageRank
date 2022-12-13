@@ -60,10 +60,10 @@ def stochastic_page_rank(graph, args):
     """
 
     # Initialize the hit count frequency of every node to 0
-    dict_count = dict()
-    for i in graph:
-        dict_count[i] = 0
+    # Use dict comprehension for optimization
+    dict_count = {i: 0 for i in graph}
 
+    # Store constant number in  variable
     n_repetitions = args.repeats
     n_steps = args.steps
 
@@ -98,26 +98,29 @@ def distribution_page_rank(graph, args):
     This function estimates the Page Rank by iteratively calculating
     the probability that a random walker is currently on any node.
     """
+    # Store constant number in  variable
+    n_steps = args.steps
+    number_nodes = len(graph)
+
     # Initialize each node probability to 1/(number of nodes)
-    node_prob = dict()
-    for node in graph:
-        node_prob[node] = 1 / (len(graph))
+    # Use dict comprehension for optimization
+    node_prob ={node: 1/number_nodes for node in graph}
 
     # Repeat iterations "args.steps" times
-    for i in range(args.steps):
+    for i in range(n_steps):
 
         # Initialize the next_prob of each node to 0
-        next_prob = dict()
-        for node in graph:
-            next_prob[node] = 0
+        next_prob = {node: 0 for node in graph}
 
         for node in graph:
             p = node_prob[node] / (len(graph[node]))
-            for target in graph[node]:
-                next_prob[target] += p
+            #for target in graph[node]:
+                #next_prob[target] += p
+            next_prob = {target:  +=p for target in graph[node]}
 
-        for node in next_prob:
-            node_prob[node] = next_prob[node]
+        #for node in next_prob:
+        #    node_prob[node] = next_prob[node]
+        node_prob = next_prob
 
     return node_prob
 
