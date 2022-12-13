@@ -1,6 +1,6 @@
 import sys
 import os
-import time
+from time import time
 import argparse
 from progress import Progress
 
@@ -19,8 +19,12 @@ def load_graph(args):
     """
     # Create a graph
     Graph = dict()
-    # Iterate through the file line by line
-    for line in args.datafile:
+
+    # Store constants in  variables
+    file = args.datafile
+
+    # Iterate through the file line by line>W
+    for line in file:
         # And split each line into two URLs
         node, target = line.split()
         if node not in Graph:
@@ -79,7 +83,7 @@ def stochastic_page_rank(graph, args):
             if current_node not in graph:
                 break
         # Increase the hit value of the finale node reached from the random walk
-        dict_count[current_node] += 1 / (n_repetitions)
+        dict_count[current_node] += 1 / n_repetitions
 
     return dict_count
 
@@ -104,7 +108,7 @@ def distribution_page_rank(graph, args):
 
     # Initialize each node probability to 1/(number of nodes)
     # Use dict comprehension for optimization
-    node_prob ={node: 1/number_nodes for node in graph}
+    node_prob = {node: 1/number_nodes for node in graph}
 
     # Repeat iterations "args.steps" times
     for i in range(n_steps):
@@ -113,10 +117,11 @@ def distribution_page_rank(graph, args):
         next_prob = {node: 0 for node in graph}
 
         for node in graph:
-            p = node_prob[node] / (len(graph[node]))
-            #for target in graph[node]:
-                #next_prob[target] += p
-            next_prob = {target:  +=p for target in graph[node]}
+            # Store constant number in  variable
+            number_target = len(graph[node])
+            p = node_prob[node] / number_target
+            for target in graph[node]:
+                next_prob[target] += p
 
         #for node in next_prob:
         #    node_prob[node] = next_prob[node]
@@ -151,10 +156,11 @@ if __name__ == '__main__':
     # print(stochastic_page_rank(graph, args))
 
     print_stats(graph)
-
-    start = time.time()
+    #start = time.time()
+    start = time()
     ranking = algorithm(graph, args)
-    stop = time.time()
+    # stop = time.time()
+    stop = time()
     time = stop - start
 
     top = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
