@@ -151,9 +151,6 @@ if __name__ == '__main__':
     # print(result)
 
     print(print_stats(graph))
-    # print(list(graph))
-
-    # print(stochastic_page_rank(graph, args))
 
     print_stats(graph)
     #start = time.time()
