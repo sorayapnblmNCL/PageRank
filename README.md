@@ -104,6 +104,8 @@ and storing constant functions in local variables :
 ~~~~
 from random import choice
 from time import time
+#Use choice() and not random.choice()
+#Use time() and not time.time()
 
 n_repetitions = args.repeats
 n_steps = args.steps
@@ -177,6 +179,7 @@ If the number of repetitions is high the time lost can be significant. So if we 
 function time from time and storing constant functions in local variables :
 ~~~~
 from time import time
+#Use time() and not time.time()
 
 n_steps = args.steps
 number_nodes = len(graph)
