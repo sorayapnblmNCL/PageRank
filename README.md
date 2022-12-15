@@ -124,6 +124,7 @@ If the number of repetitions is high the time lost can be significant. So if we 
 ~~~~
 
 **Time after this alteration: 47.76 seconds, we gained 8.46% on the former time**
+(The time is an approximation, it varies of few seconds between different command line calls)
 
 
 ------------------------------------------------------------------------------------------------
@@ -198,6 +199,7 @@ number_nodes = len(graph)
 ~~~~
 
 **Time execution after alterations: 0.13 seconds. After all the alterations the time for this function is still the same**
+(The time is an approximation, it varies of few seconds between different command line calls)
 
 In my opinion because the former time was already very fast (0.13 seconds), the time gained through the alterations made 
 to the function was negligible. 
