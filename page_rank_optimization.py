@@ -1,11 +1,12 @@
 import sys
 import os
-from time import time
 import argparse
 from progress import Progress
 
-#Import just the function we need
+#Import the needed functions from the modules
 from random import choice
+from time import time
+
 
 
 def load_graph(args):
@@ -18,21 +19,21 @@ def load_graph(args):
     A dict mapling a URL (str) to a list of target URLs (str).
     """
     # Create a graph
-    Graph = dict()
+    graph = dict()
 
-    # Store constants in  variables
+    # Store constants in local variables
     file = args.datafile
 
     # Iterate through the file line by line>W
     for line in file:
         # And split each line into two URLs
         node, target = line.split()
-        if node not in Graph:
-            Graph[node] = []
-            Graph[node].append(target)
-        elif node in Graph:
-            Graph[node].append(target)
-    return Graph
+        if node not in graph:
+            graph[node] = []
+            graph[node].append(target)
+        elif node in graph:
+            graph[node].append(target)
+    return graph
 
 
 def print_stats(graph):
@@ -40,11 +41,9 @@ def print_stats(graph):
     # Number of nodes
     number_nodes = len(graph)
     # Number of edges
-    s = 0
     count = 0
     for i in graph:
         count += len(graph[i])
-
     return f'The number of nodes is {number_nodes} and the number of edges is {count}'
 
 
@@ -67,7 +66,7 @@ def stochastic_page_rank(graph, args):
     # Use dict comprehension for optimization
     dict_count = {i: 0 for i in graph}
 
-    # Store constant number in  variable
+    # Store constants in local variables
     n_repetitions = args.repeats
     n_steps = args.steps
 
@@ -102,7 +101,7 @@ def distribution_page_rank(graph, args):
     This function estimates the Page Rank by iteratively calculating
     the probability that a random walker is currently on any node.
     """
-    # Store constant number in  variable
+    # Store constants in local variables
     n_steps = args.steps
     number_nodes = len(graph)
 
@@ -122,9 +121,6 @@ def distribution_page_rank(graph, args):
             p = node_prob[node] / number_target
             for target in graph[node]:
                 next_prob[target] += p
-
-        #for node in next_prob:
-        #    node_prob[node] = next_prob[node]
         node_prob = next_prob
 
     return node_prob
@@ -159,6 +155,7 @@ if __name__ == '__main__':
     #start = time.time()
     start = time()
     ranking = algorithm(graph, args)
+    print(type(ranking))
     # stop = time.time()
     stop = time()
     time = stop - start

@@ -17,17 +17,17 @@ def load_graph(args):
     A dict mapling a URL (str) to a list of target URLs (str).
     """
     # Create a graph
-    Graph = dict()
+    graph = dict()
     # Iterate through the file line by line
     for line in args.datafile:
         # And split each line into two URLs
         node, target = line.split()
-        if node not in Graph:
-            Graph[node] = []
-            Graph[node].append(target)
-        elif node in Graph:
-            Graph[node].append(target)
-    return Graph
+        if node not in graph:
+            graph[node] = []
+            graph[node].append(target)
+        elif node in graph:
+            graph[node].append(target)
+    return graph
 
 
 
@@ -36,16 +36,28 @@ def print_stats(graph):
     # Number of nodes
     number_nodes = len(graph)
     # Number of edges
-    s = 0
     count = 0
     for i in graph:
         count += len(graph[i])
-
     return f'The number of nodes is {number_nodes} and the number of edges is {count}'
 
 
 
 def stochastic_page_rank(graph, args):
+    """Stochastic PageRank estimation
+
+        Parameters:
+        graph -- a graph object as returned by load_graph()
+        args -- arguments named tuple
+
+        Returns:
+        A dict that assigns each page its hit frequency
+
+        This function estimates the Page Rank by counting how frequently
+        a random walk that starts on a random node will after n_steps end
+        on each node of the given graph.
+        """
+
     # Initialize the hit count frequency of every node to 0
     dict_count = dict()
     for i in graph:
@@ -59,14 +71,14 @@ def stochastic_page_rank(graph, args):
         for j in range(args.steps):
             # Select randomly a node from the target list of current_node and name it as the new current
             current_node = random.choice(graph[current_node])
-            # If the new current_node does not have has no outgoing edges then break the walker steps loop to select a new random node
+            # If the new current_node does not have has no outgoing edges then break the walker steps loop
+            # to select a new random node
             if current_node not in graph:
                 break
         # Increase the hit value of the finale node reached from the random walk
-        dict_count[current_node] += 1 / (args.repeats)
+        dict_count[current_node] += 1 / args.repeats
 
     return dict_count
-
 
 
 
@@ -97,19 +109,13 @@ if len(graph[random_node_source]) == 0:
 
 
 
-
-
-
 def distribution_page_rank(graph, args):
     """Probabilistic PageRank estimation
-
     Parameters:
     graph -- a graph object as returned by load_graph()
     args -- arguments named tuple
-
     Returns:
     A dict that assigns each page its probability to be reached
-
     This function estimates the Page Rank by iteratively calculating
     the probability that a random walker is currently on any node.
     """
@@ -135,7 +141,6 @@ def distribution_page_rank(graph, args):
             node_prob[node] = next_prob[node]
 
     return node_prob
-
 
 
 
@@ -187,6 +192,7 @@ if __name__ == '__main__':
 
 
     print_stats(graph)
+
 
     start = time.time()
     ranking = algorithm(graph, args)
