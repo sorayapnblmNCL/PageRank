@@ -1,11 +1,9 @@
 import sys
 import os
 import argparse
-
 #Import the needed functions from the modules
 from random import choice
 from time import time
-
 
 
 def load_graph(args):
@@ -149,6 +147,7 @@ if __name__ == '__main__':
     stop = time()
     time = stop - start
 
+    # Display the PageRank top "args.number" pages
     top = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
     sys.stderr.write(f"Top {args.number} pages:\n")
     print('\n'.join(f'{100*v:.2f}\t{k}' for k,v in top[:args.number]))
