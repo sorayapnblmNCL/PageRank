@@ -39,7 +39,7 @@ It is this file we have retrieved data from to exploit them as wanted.
 ===================
 
 After having implemented both algorithms, I tried to improve my solutions with the aim to increase execution speed. 
-I use time module to measure code execution times.
+I used the "time" module to measure code execution times.
 
 **load_graph function:**
 --------------------------------
@@ -97,9 +97,7 @@ For this function, the optimization consisted in storing constant functions in l
 **_Time execution before optimization: 52.16 seconds_**
 
 
-**Code optimization:**
-
-To optimize performance:
+**To optimize performance:**
 
 - I have avoided attribute lookups by only importing the function choice from random and the function time from time
 and storing constant functions in local variables :
@@ -173,9 +171,7 @@ If the number of repetitions is high the time lost can be significant. So if we 
 **_Time execution before optimization: 0.13 seconds_**
 
 
-**Code optimization:**
-
-To optimize performance:
+**To optimize performance:**
 
 - As well as stochastic_page_rank, I have avoided attribute lookups in distribution_page_rank by only importing the 
 function time from time and storing constant functions in local variables :
