@@ -51,6 +51,7 @@ For this function, the optimization consisted in storing constant functions in l
     file = args.datafile
 ~~~~
 
+------------------------------------------------------------------------------------------------
 
 **PageRank function through random walkers :**
 -------------------------------------------------
@@ -125,7 +126,7 @@ If the number of repetitions is high the time lost can be significant. So if we 
 **Time after this alteration: 47.76 seconds, we gained 8.46% on the former time**
 
 
-
+------------------------------------------------------------------------------------------------
 
 **PageRank function through probability distributions before code optimization:**
 ---------------------------------------------------------------------------------
@@ -200,3 +201,9 @@ number_nodes = len(graph)
 
 In my opinion because the former time was already very fast (0.13 seconds), the time gained through the alterations made 
 to the function was negligible. 
+
+Proofs of both functions' time execution screenshots are in the S220642259 main folder.
+
+
+PANAMBALOM Soraya
+-----------------
