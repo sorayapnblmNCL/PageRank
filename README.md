@@ -4,8 +4,11 @@
 *Overview*
 ========
 
+This project is a school project done in Stage 1 of my BSc Computer Science.
 The aim of this project is to simulate how Google's PageRank works.
-To do so:
+The dataset we are going to use for this project contains information about links among Newcastle University School of Computing's web pages.
+
+Overview:
 
 **page_rank.py** : In this python file, I have implemented four functions:
 
@@ -25,13 +28,46 @@ The more iterations, the more precise pages' PageRank will be.
 
 **The PageRank functions are adapted from the given pseudocodes.**
 
-Through the boilerplate code in the "__main__", the top "args.number" ranked pages will appear in the terminal.
+Through the code in the "__main__", the top "args.number" ranked pages will appear in the terminal.
 The "argparse" library is used in this assessment and has been implemented with its different options.
 
 **school_website.txt** : This file contains information about links among web pages of the School of Computing website.
 It is this file we have retrieved data from to exploit them as wanted.
 
-**progress.py** : The module progress.py provides a command line progress bar. However, I didn't use it.
+
+*How to run*
+=============
+
+To have a simulatation of how Page Rank works through random walkers, run in the terminal: 
+
+~~~~
+python3 page_rank.py school_web.txt
+~~~~
+
+or:
+
+~~~~
+python3 page_rank.py school_web.txt -m stochastic
+~~~~
+
+
+To have a simulatation of how Page Rank works through probability distributions, run in the terminal: 
+
+~~~~
+python3 page_rank.py school_web.txt -m distribution
+~~~~
+
+To control the other variable use : 
+
+Use: 
+- '-r' to control the number of repetitions.
+- '-s' to control the number of steps a walker takes.
+- '-n' to control the number of results shown.
+
+For example: 
+~~~~
+python3 page_rank.py school_web.txt -m distribution -r 1000000 -s 100 -n 20
+~~~~
 
 
 
