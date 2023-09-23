@@ -69,7 +69,7 @@ For example:
 python3 page_rank.py school_web.txt -m distribution -r 1000000 -s 100 -n 20
 ~~~~
 
-
+I use "python3" because it is my python's version. Use your python's version.
 
 *Code optimization*
 ===================
